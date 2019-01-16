@@ -211,21 +211,22 @@ client.on('message', message => {
 
 
   
-client.on("message", msg => {
-    if(msg.content.startsWith ("E#id")) {  
+client.on("message", message => {
+    if(message.content.startsWith ("E#id")) {
+if (!message.channel.guild) return message.reply('** This command only for servers **');		
         const embed = new Discord.RichEmbed();
-    embed.addField(":cloud_tornado:  الاسم", `**[ ${msg.author.username}#${msg.author.discriminator} ]**`, true)
-            .addField(":id:  الايدي", `**[ ${msg.author.id} ]**`, true)
+    embed.addField(":cloud_tornado:  الاسم", `**[ ${message.author.username}#${message.author.discriminator} ]**`, true)
+            .addField(":id:  الايدي", `**[ ${message.author.id} ]**`, true)
             .setColor("RANDOM")
-            .setFooter(msg.author.username , msg.author.avatarURL)
-            .setThumbnail(`${msg.author.avatarURL}`)
+            .setFooter(message.author.username , msg.author.avatarURL)
+            .setThumbnail(`${message.author.avatarURL}`)
             .setTimestamp()
-            .setURL(`${msg.author.avatarURL}`)
-            .addField(':spy:  الحالة', `**[ ${msg.author.presence.status.toUpperCase()} ]**`, true)
-            .addField(':satellite_orbital:   يلعب', `**[ ${msg.author.presence.game === null ? "No Game" : msg.author.presence.game.name} ]**`, true)
-            .addField(':military_medal:  الرتب', `**[ ${msg.member.roles.filter(r => r.name).size} ]**`, true)
-            .addField(':robot:  هل هو بوت', `**[ ${msg.author.bot.toString().toUpperCase()} ]**`, true);
-        msg.channel.send({embed: embed})
+            .setURL(`${message.author.avatarURL}`)
+            .addField(':spy:  الحالة', `**[ ${message.author.presence.status.toUpperCase()} ]**`, true)
+            .addField(':satellite_orbital:   يلعب', `**[ ${message.author.presence.game === null ? "No Game" : msg.author.presence.game.name} ]**`, true)
+            .addField(':military_medal:  الرتب', `**[ ${message.member.roles.filter(r => r.name).size} ]**`, true)
+            .addField(':robot:  هل هو بوت', `**[ ${message.author.bot.toString().toUpperCase()} ]**`, true);
+        message.channel.send({embed: embed})
     }
   });
 
@@ -271,6 +272,7 @@ client.on('message',function(message) {
 
       client.on('message', async message => {
   if(message.content.startsWith("E#voicesetup")) {
+	  if (!message.channel.guild) return message.reply('** This command only for servers **');
   if(!message.guild.member(message.author).hasPermissions('MANAGE_CHANNELS')) return message.reply(':x: **ليس لديك الصلاحيات الكافية**');
   if(!message.guild.member(client.user).hasPermissions(['MANAGE_CHANNELS','MANAGE_ROLES_OR_PERMISSIONS'])) return message.reply(':x: **ليس معي الصلاحيات الكافية**');
   var args = message.content.split(' ').slice(1).join(' ');
